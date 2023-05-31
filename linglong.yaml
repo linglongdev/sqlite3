@@ -6,7 +6,6 @@ package:
   description: |
     sqlite3.
 
-
 base:
   id: org.deepin.base
   version: 23.0.0
@@ -17,19 +16,20 @@ source:
   version: uos
   commit: cbb1a05e3e83cddd72ba1da09a05698407ec51a5
   patch:
-  - 10-520466-libsqlite3-depends-on-libdl.patch
-  - 10-520478-squash-bad-deps.patch
-  - 20-hurd-locking-style.patch
-  - 30-cross.patch
-  - 10-665363-disable-malloc-usable-size.patch
-  - 31-increase_SQLITE_MAX_DEFAULT_PAGE_SIZE_to_32k.patch
-  - 02-use-packaged-lempar.c.patch
-  - 40-fix_CVE-2021-36690.patch
+    - 10-520466-libsqlite3-depends-on-libdl.patch
+    - 10-520478-squash-bad-deps.patch
+    - 20-hurd-locking-style.patch
+    - 30-cross.patch
+    - 10-665363-disable-malloc-usable-size.patch
+    - 31-increase_SQLITE_MAX_DEFAULT_PAGE_SIZE_to_32k.patch
+    - 02-use-packaged-lempar.c.patch
+    - 40-fix_CVE-2021-36690.patch
 build:
   kind: manual
   manual:
     configure: |
       #exec bash
+      update-alternatives --auto automake
       autoreconf -ivf
       ./configure --prefix=${PREFIX} \
           --with-tcl= \
@@ -44,4 +44,4 @@ build:
           TCLLIBDIR=\$${prefix}/lib/tcltk/sqlite3 \
           --enable-debug
        make -j6
-       make install 
+       make install
